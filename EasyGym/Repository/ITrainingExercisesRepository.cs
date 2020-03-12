@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace EasyGym.Repository
 {
-    public interface ITrainingRepository : IRepository<Training>
+    interface ITrainingExercisesRepository : IRepository<TrainingExercises>
     {
-        IEnumerable<Training> GetTopTraining(int count);
-        
+        void AddExercisesToTraning(TrainingExercises trainingExercises);
     }
 }
