@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using EasyGym.Repository;
+using Microsoft.OpenApi.Models;
+using EasyGym.Options;
 
 namespace EasyGym
 {
@@ -37,6 +39,11 @@ namespace EasyGym
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
+
             services.AddControllers();
         }
 
@@ -47,6 +54,17 @@ namespace EasyGym
             {
                 app.UseDeveloperExceptionPage();
             }
+            var swaggerOptions = new SwaggerOptions();
+            Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
+            app.UseSwagger();
+            app.UseSwagger(c =>
+            {
+                c.RouteTemplate = swaggerOptions.JsonRoute;
+            });
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint(swaggerOptions.UIEndpoint, swaggerOptions.Description);
+            });
 
             app.UseHttpsRedirection();
 

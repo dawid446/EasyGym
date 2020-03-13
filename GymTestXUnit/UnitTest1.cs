@@ -15,7 +15,8 @@ namespace GymTestXUnit
             {
                 TrainingID = 1,
                 Data = DateTime.Now,
-                NameTraining = "Test"
+                NameTraining = "Test",
+               
             };
             var context = new Mock<GymContext>();
             var mockTrainingRepo = new Mock<ITrainingRepository>();
