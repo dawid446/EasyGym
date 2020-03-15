@@ -38,13 +38,12 @@ namespace EasyGym
             //services.AddTransient<ITrainingRepository, TrainingRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             
+            services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
-
-            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +55,7 @@ namespace EasyGym
             }
             var swaggerOptions = new SwaggerOptions();
             Configuration.GetSection(nameof(SwaggerOptions)).Bind(swaggerOptions);
-            app.UseSwagger();
+            
             app.UseSwagger(c =>
             {
                 c.RouteTemplate = swaggerOptions.JsonRoute;

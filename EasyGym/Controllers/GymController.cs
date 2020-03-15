@@ -19,7 +19,7 @@ namespace EasyGym.Controllers
         {
             _context = repo;
         }
-        [HttpGet]
+        [HttpGet("api/GetAll")]
         public int GetAll()
         {
             return _context.Training.Find(s=> s.TrainingID == 1).Count();
